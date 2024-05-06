@@ -7,31 +7,23 @@ import (
 	"os"
 )
 
+type application struct {
+	logger *slog.Logger
+}
+
 func main() {
-  addr := flag.String("addr", ":4000", "HTTP network address")
-  flag.Parse()
+	addr := flag.String("addr", ":4000", "HTTP network address")
+	flag.Parse()
 
-  logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
-    AddSource: true,
-    Level: slog.LevelDebug,
-  }))
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 
-	mux := http.NewServeMux()
+	app := &application{
+		logger: logger,
+	}
 
-  //Static server
-  fileServer := http.FileServer(http.Dir("./ui/static/"))
-	mux.Handle("GET /static/", http.StripPrefix("/static", fileServer))
+	logger.Info("starting server", slog.String("addr", *addr))
 
-  //Handlers
-	mux.HandleFunc("GET /{$}", home)
-	mux.HandleFunc("GET /list/view/{id}", listView)
-	mux.HandleFunc("GET /list/create", listCreate)
-	mux.HandleFunc("POST /list/create", listCreatePost)
-
-
-  logger.Info("starting server", slog.String("addr", *addr))
-
-	err := http.ListenAndServe(*addr, mux)
-  logger.Error(err.Error())
+	err := http.ListenAndServe(*addr, app.routes())
+	logger.Error(err.Error())
 	os.Exit(1)
 }
