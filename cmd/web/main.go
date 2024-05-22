@@ -8,11 +8,12 @@ import (
 	"os"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
+	"github.com/ptakpatryk/list-me/internals/models"
 )
 
 type application struct {
 	logger *slog.Logger
-	db     *sql.DB
+	lists  *models.ListModel
 }
 
 func main() {
@@ -20,7 +21,9 @@ func main() {
 	addr := flag.String("addr", ":4000", "HTTP network address")
 	flag.Parse()
 
-	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+    Level: slog.LevelDebug,
+  }))
 
 	db, err := openDB(*connectionString)
 	if err != nil {
@@ -31,7 +34,7 @@ func main() {
 
 	app := &application{
 		logger: logger,
-		db:     db,
+		lists:  &models.ListModel{DB: db},
 	}
 
 	logger.Info("starting server", slog.String("addr", *addr))
