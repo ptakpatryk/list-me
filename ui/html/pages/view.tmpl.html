@@ -1,0 +1,18 @@
+{{define "title"}}List #{{.List.ID}}{{end}}
+{{define "main"}}
+<div class="list">
+  <h2>
+    {{.List.Title}} #{{.List.ID}}
+  </h2>
+  <pre>
+    <code>
+      {{.List.Description}}
+    </code>
+  </pre>
+  <div class="metadata">
+    <time>Created: {{.List.Created}}</time>
+    <br />
+    <time>Expires: {{.List.Expires}}</time>
+  </div>
+</div>
+{{end}}

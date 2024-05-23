@@ -32,8 +32,7 @@ func (l *ListModel) Insert(title, description string, expires int) (int, error) 
 }
 
 func (l *ListModel) Get(id int) (List, error) {
-	stmt := `SELECT id, title, description, created, expires FROM lists 
-  WHERE expires > now() AND id = $1`
+	stmt := `SELECT id, title, description, created, expires FROM lists WHERE id = $1`
 
 	var list List
 	err := l.DB.QueryRow(stmt, id).Scan(&list.ID, &list.Title, &list.Description, &list.Created, &list.Expires)
@@ -48,6 +47,32 @@ func (l *ListModel) Get(id int) (List, error) {
 	return list, nil
 }
 
-func (l *ListModel) Latest(id int) ([]List, error) {
-	return nil, nil
+func (l *ListModel) Latest() ([]List, error) {
+	stmt := `SELECT id, title, description, created, expires FROM lists ORDER BY id LIMIT 5`
+
+	rows, err := l.DB.Query(stmt)
+	if err != nil {
+		return nil, err
+	}
+
+  defer rows.Close()
+
+  var lists []List
+
+  for rows.Next() {
+    var l List
+
+    err = rows.Scan(&l.ID, &l.Title, &l.Description, &l.Created, &l.Expires)
+    if err != nil {
+      return nil, err
+    }
+
+    lists = append(lists, l)
+  }
+
+  if err = rows.Err(); err != nil {
+    return nil, err
+  }
+
+	return lists, nil
 }
