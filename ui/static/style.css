@@ -71,3 +71,35 @@ footer {
   background-color: #343a40;
   color: #c678dd;
 }
+
+/* Material-UI table style with Tokyo Night colors */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd (1px solid #282c34); /* Tokyo Night - Divider */
+  background-color: #242832; /* Tokyo Night - Background */
+  color: #abb2bf; /* Tokyo Night - Text */
+  font-family: sans-serif;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ddd (1px solid #434c58); /* Tokyo Night - Faint divider */
+}
+
+td a {
+  color: white;
+}
+
+th {
+  text-align: left;
+  background-color: #1e232a; /* Tokyo Night - Header background */
+  color: #abb2bf; /* Tokyo Night - Text */
+}
+
+tr:nth-child(even) {
+  background-color: #242832; /* Tokyo Night - Alternate row background */
+}

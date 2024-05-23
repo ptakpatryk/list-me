@@ -3,9 +3,9 @@ package main
 import (
 	"errors"
 	"fmt"
+	"html/template"
 	"net/http"
 	"strconv"
-	"html/template"
 
 	"github.com/ptakpatryk/list-me/internals/models"
 )
@@ -17,28 +17,26 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(lists)
-
-	for _, list := range lists {
-		fmt.Fprintf(w, "%+v\n", list)
+	files := []string{
+		"./ui/html/base.tmpl.html",
+		"./ui/html/partials/nav.tmpl.html",
+		"./ui/html/pages/home.tmpl.html",
+	}
+	ts, err := template.ParseFiles(files...)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
 	}
 
-	/* files := []string{ */
-	/* 	"./ui/html/base.tmpl.html", */
-	/* 	"./ui/html/partials/nav.tmpl.html", */
-	/* 	"./ui/html/pages/home.tmpl.html", */
-	/* } */
-	/* ts, err := template.ParseFiles(files...) */
-	/* if err != nil { */
-	/* 	app.serverError(w, r, err) */
-	/* 	return */
-	/* } */
-	/**/
-	/* err = ts.ExecuteTemplate(w, "base", nil) */
-	/* if err != nil { */
-	/* 	app.serverError(w, r, err) */
-	/* 	return */
-	/* } */
+	data := templateData{
+		Lists: lists,
+	}
+
+	err = ts.ExecuteTemplate(w, "base", data)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
 }
 
 func (app *application) listView(w http.ResponseWriter, r *http.Request) {
@@ -69,9 +67,9 @@ func (app *application) listView(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-  data := templateData{
-    List: list,
-  }
+	data := templateData{
+		List: list,
+	}
 
 	err = ts.ExecuteTemplate(w, "base", data)
 	if err != nil {
