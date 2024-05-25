@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"flag"
+	"html/template"
 	"log/slog"
 	"net/http"
 	"os"
@@ -12,8 +13,9 @@ import (
 )
 
 type application struct {
-	logger *slog.Logger
-	lists  *models.ListModel
+	logger        *slog.Logger
+	lists         *models.ListModel
+	templateCache map[string]*template.Template
 }
 
 func main() {
@@ -22,8 +24,8 @@ func main() {
 	flag.Parse()
 
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
-    Level: slog.LevelDebug,
-  }))
+		Level: slog.LevelDebug,
+	}))
 
 	db, err := openDB(*connectionString)
 	if err != nil {
@@ -32,9 +34,16 @@ func main() {
 	}
 	defer db.Close()
 
+	templateCache, err := newTemplateCache()
+	if err != nil {
+		logger.Error(err.Error())
+		os.Exit(1)
+	}
+
 	app := &application{
-		logger: logger,
-		lists:  &models.ListModel{DB: db},
+		logger:        logger,
+		lists:         &models.ListModel{DB: db},
+		templateCache: templateCache,
 	}
 
 	logger.Info("starting server", slog.String("addr", *addr))
