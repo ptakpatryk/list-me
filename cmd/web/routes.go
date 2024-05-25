@@ -2,7 +2,7 @@ package main
 
 import "net/http"
 
-func (app *application) routes() *http.ServeMux {
+func (app *application) routes() http.Handler {
 	mux := http.NewServeMux()
 
 	//Static server
@@ -15,5 +15,5 @@ func (app *application) routes() *http.ServeMux {
 	mux.HandleFunc("GET /list/create", app.listCreate)
 	mux.HandleFunc("POST /list/create", app.listCreatePost)
 
-	return mux
+	return commonHeaders(mux)
 }
