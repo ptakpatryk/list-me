@@ -126,6 +126,13 @@ label {
   margin-bottom: 5px;
 }
 
+div.error {
+  color: red;
+  font-size: 12px;
+  opacity: 0.8;
+  margin: 4px 0 8px;
+}
+
 /* Input fields */
 input[type="text"],
 textarea {
@@ -134,7 +141,6 @@ textarea {
   border: 1px solid #434C5E; /* Tokyo Night - Border */
   background-color: #282A35; /* Tokyo Night - Subtle Background */
   font-size: 14px;
-  margin-bottom: 15px;
 }
 
 .input-wrapper {
@@ -143,7 +149,7 @@ textarea {
 }
 
 .radio-wrapper {
-  margin: 20px 0px;
+  margin: 5px 0px 20px;
 }
 
 input[type="text"]:focus,

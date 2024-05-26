@@ -4,17 +4,28 @@
 <form action='/list/create' method='POST'>
   <div class="input-wrapper">
     <label>Title:</label>
-    <input type='text' name='title'>
+    <input type='text' name='title' value='{{.Form.Title}}'>
+    {{with .Form.FieldErrors.title}}
+      <div class="error">{{.}}</div>
+    {{end}}
   </div>
   <div class="input-wrapper">
     <label>Description:</label>
-    <textarea name='description'></textarea>
+    <textarea name='description'>{{.Form.Description}}</textarea>
+    {{with .Form.FieldErrors.description}}
+      <div class="error">{{.}}</div>
+    {{end}}
   </div>
   <div class="radio-wrapper">
     <label>Delete in:</label>
-    <input type='radio' name='expires' value='365' checked> One Year
-    <input type='radio' name='expires' value='7'> One Week
-    <input type='radio' name='expires' value='1'> One Day
+    <input type='radio' name='expires' value='365' {{if (eq .Form.Expires 365)}}checked{{end}}> One Year
+    <input type='radio' name='expires' value='7' {{if (eq .Form.Expires 7)}}checked{{end}}> One Week
+    <input type='radio' name='expires' value='1' {{if (eq .Form.Expires 1)}}checked{{end}}> One Day
+    <div>
+      {{with .Form.FieldErrors.expires}}
+        <div class="error">{{.}}</div>
+      {{end}}
+    </div>
   </div>
   <div>
     <input type='submit' value='Publish snippet'>

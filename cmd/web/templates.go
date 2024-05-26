@@ -12,6 +12,7 @@ type templateData struct {
 	CurrentYear int
 	List        models.List
 	Lists       []models.List
+	Form        any
 }
 
 func humanDate(t time.Time) string {
@@ -52,4 +53,3 @@ func newTemplateCache() (map[string]*template.Template, error) {
 
 	return cache, nil
 }
-
