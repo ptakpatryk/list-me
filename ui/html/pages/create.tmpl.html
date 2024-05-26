@@ -1,0 +1,23 @@
+{{define "title"}}Create a New List{{end}}
+
+{{define "main"}}
+<form action='/list/create' method='POST'>
+  <div class="input-wrapper">
+    <label>Title:</label>
+    <input type='text' name='title'>
+  </div>
+  <div class="input-wrapper">
+    <label>Description:</label>
+    <textarea name='description'></textarea>
+  </div>
+  <div class="radio-wrapper">
+    <label>Delete in:</label>
+    <input type='radio' name='expires' value='365' checked> One Year
+    <input type='radio' name='expires' value='7'> One Week
+    <input type='radio' name='expires' value='1'> One Day
+  </div>
+  <div>
+    <input type='submit' value='Publish snippet'>
+  </div>
+</form>
+{{end}}

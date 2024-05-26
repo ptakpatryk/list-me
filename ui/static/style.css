@@ -72,6 +72,11 @@ footer {
   color: #c678dd;
 }
 
+footer a {
+  color: #EEE8D5; /* Tokyo Night - Text */
+  opacity: 0.6;
+}
+
 /* Material-UI table style with Tokyo Night colors */
 
 table {
@@ -103,3 +108,96 @@ th {
 tr:nth-child(even) {
   background-color: #242832; /* Tokyo Night - Alternate row background */
 }
+
+
+/* Form container */
+form {
+  color: #EEE8D5; /* Tokyo Night - Text */
+  padding: 20px;
+  border-radius: 4px;
+  background-color: #282A35; /* Tokyo Night - Subtle Background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+
+/* Labels */
+label {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* Input fields */
+input[type="text"],
+textarea {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #434C5E; /* Tokyo Night - Border */
+  background-color: #282A35; /* Tokyo Night - Subtle Background */
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-wrapper {
+  margin: 20px 0px;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #6C77FF; /* Tokyo Night - Accent */
+}
+
+/* Radio buttons */
+.radio-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.radio-container input[type="radio"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio-container label {
+  margin-left: 5px;
+}
+
+.radio-container::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #434C5E; /* Tokyo Night - Border */
+  background-color: #282A35; /* Tokyo Night - Subtle Background */
+}
+
+.radio-container input[type="radio"]:checked + ::before {
+  background-color: #6C77FF; /* Tokyo Night - Accent */
+}
+
+/* Submit button */
+input[type="submit"] {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #6C77FF; /* Tokyo Night - Accent */
+  color: #EEE8D5; /* Tokyo Night - Text */
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.2s ease-in-out;
+}
+
+input[type="submit"]:hover {
+  background-color: #434C5E; /* Tokyo Night - Border (hover) */
+}
+
+

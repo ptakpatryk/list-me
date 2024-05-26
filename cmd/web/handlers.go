@@ -15,10 +15,10 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, r, err)
 		return
 	}
-  data := app.newTemplateData(r)
-  data.Lists = lists
+	data := app.newTemplateData(r)
+	data.Lists = lists
 
-	app.render(w, r, 200, "home.tmpl.html", *data)
+	app.render(w, r, 200, "home.tmpl.html", data)
 }
 
 func (app *application) listView(w http.ResponseWriter, r *http.Request) {
@@ -38,20 +38,33 @@ func (app *application) listView(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-  data := app.newTemplateData(r)
-  data.List = list
+	data := app.newTemplateData(r)
+	data.List = list
 
-	app.render(w, r, 200, "view.tmpl.html", *data)
+	app.render(w, r, 200, "view.tmpl.html", data)
 }
 
 func (app *application) listCreate(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Display a form for creating a new list..."))
+  data := app.newTemplateData(r)
+
+	app.render(w, r, http.StatusOK, "create.tmpl.html", data)
 }
 
 func (app *application) listCreatePost(w http.ResponseWriter, r *http.Request) {
-	title := "Zakupy sobota"
-	description := "alko, alko, alko..."
-	expires := 7
+  err := r.ParseForm()
+  if err != nil {
+    app.clientError(w, http.StatusBadRequest)
+    return
+  }
+
+
+	title := r.PostForm.Get("title")
+	description := r.PostForm.Get("description")
+	expires, err := strconv.Atoi(r.PostForm.Get("expires"))
+  if err != nil {
+    app.clientError(w, http.StatusBadRequest)
+    return
+  }
 
 	id, err := app.lists.Insert(title, description, expires)
 	if err != nil {

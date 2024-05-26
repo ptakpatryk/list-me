@@ -2,7 +2,10 @@ module github.com/ptakpatryk/list-me
 
 go 1.22.2
 
-require github.com/jackc/pgx/v5 v5.5.5
+require (
+	github.com/jackc/pgx/v5 v5.5.5
+	github.com/justinas/alice v1.2.0
+)
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect
