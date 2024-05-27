@@ -140,7 +140,7 @@ div.error {
   color: red;
   font-size: 12px;
   opacity: 0.8;
-  margin: 4px 0 8px;
+  margin-top: 4px;
 }
 
 /* Input fields */
@@ -149,15 +149,14 @@ textarea {
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #434C5E;
-  /* Tokyo Night - Border */
   background-color: #282A35;
-  /* Tokyo Night - Subtle Background */
   font-size: 14px;
 }
 
 .input-wrapper {
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .radio-wrapper {

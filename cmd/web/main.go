@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"database/sql"
 	"flag"
 	"html/template"
@@ -17,11 +18,11 @@ import (
 )
 
 type application struct {
-	logger        *slog.Logger
-	lists         *models.ListModel
-	templateCache map[string]*template.Template
-	formDecoder   *form.Decoder
-  sessionManager *scs.SessionManager
+	logger         *slog.Logger
+	lists          *models.ListModel
+	templateCache  map[string]*template.Template
+	formDecoder    *form.Decoder
+	sessionManager *scs.SessionManager
 }
 
 func main() {
@@ -48,21 +49,36 @@ func main() {
 
 	formDecoder := form.NewDecoder()
 
-  sessionManager := scs.New()
-  sessionManager.Store = postgresstore.New(db)
-  sessionManager.Lifetime = 12 * time.Hour
+	sessionManager := scs.New()
+	sessionManager.Store = postgresstore.New(db)
+	sessionManager.Lifetime = 12 * time.Hour
+	sessionManager.Cookie.Secure = true
 
 	app := &application{
-		logger:        logger,
-		lists:         &models.ListModel{DB: db},
-		templateCache: templateCache,
-		formDecoder:   formDecoder,
-    sessionManager: sessionManager,
+		logger:         logger,
+		lists:          &models.ListModel{DB: db},
+		templateCache:  templateCache,
+		formDecoder:    formDecoder,
+		sessionManager: sessionManager,
+	}
+
+	tlsConfig := &tls.Config{
+		CurvePreferences: []tls.CurveID{tls.X25519, tls.CurveP256},
+	}
+
+	srv := &http.Server{
+		Addr:      *addr,
+		Handler:   app.routes(),
+		ErrorLog:  slog.NewLogLogger(logger.Handler(), slog.LevelError),
+		TLSConfig: tlsConfig,
+    IdleTimeout: time.Minute,
+    ReadTimeout: 5 * time.Second,
+    WriteTimeout: 10 * time.Second,
 	}
 
 	logger.Info("starting server", slog.String("addr", *addr))
 
-	err = http.ListenAndServe(*addr, app.routes())
+	err = srv.ListenAndServeTLS("./tls/cert.pem", "./tls/key.pem")
 	logger.Error(err.Error())
 	os.Exit(1)
 }
