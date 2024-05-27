@@ -13,12 +13,14 @@ func (app *application) routes() http.Handler {
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
 	mux.Handle("GET /static/", http.StripPrefix("/static", fileServer))
 
-	//Handlers
-	mux.HandleFunc("GET /{$}", app.home)
-	mux.HandleFunc("GET /list/view/{id}", app.listView)
-	mux.HandleFunc("GET /list/create", app.listCreate)
-	mux.HandleFunc("POST /list/create", app.listCreatePost)
+	dynamic := alice.New(app.sessionManager.LoadAndSave)
 
-  standard := alice.New(app.recoverPanic, app.logRequest, commonHeaders)
+	//Handlers
+	mux.Handle("GET /{$}", dynamic.ThenFunc(app.home))
+	mux.Handle("GET /list/view/{id}", dynamic.ThenFunc(app.listView))
+	mux.Handle("GET /list/create", dynamic.ThenFunc(app.listCreate))
+	mux.Handle("POST /list/create", dynamic.ThenFunc(app.listCreatePost))
+
+	standard := alice.New(app.recoverPanic, app.logRequest, commonHeaders)
 	return standard.Then(mux)
 }

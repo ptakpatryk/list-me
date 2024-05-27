@@ -45,7 +45,7 @@ func (app *application) listView(w http.ResponseWriter, r *http.Request) {
 	app.render(w, r, 200, "view.tmpl.html", data)
 }
 
-type snippetCreateForm struct {
+type listCreateForm struct {
 	Title               string `form:"title"`
 	Description         string `form:"description"`
 	Expires             int    `form:"expires"`
@@ -55,7 +55,7 @@ type snippetCreateForm struct {
 func (app *application) listCreate(w http.ResponseWriter, r *http.Request) {
 	data := app.newTemplateData(r)
 
-	data.Form = snippetCreateForm{
+	data.Form = listCreateForm{
 		Expires: 365,
 	}
 
@@ -63,9 +63,9 @@ func (app *application) listCreate(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) listCreatePost(w http.ResponseWriter, r *http.Request) {
-  var form snippetCreateForm
+	var form listCreateForm
 
-  err := app.decodePostForm(r, &form)
+	err := app.decodePostForm(r, &form)
 	if err != nil {
 		app.clientError(w, http.StatusBadRequest)
 		return
@@ -88,6 +88,8 @@ func (app *application) listCreatePost(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, r, err)
 		return
 	}
+
+	app.sessionManager.Put(r.Context(), "flash", "Snippet succesfully created!")
 
 	http.Redirect(w, r, fmt.Sprintf("/list/view/%d", id), http.StatusSeeOther)
 }

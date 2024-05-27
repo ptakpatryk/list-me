@@ -73,7 +73,8 @@ footer {
 }
 
 footer a {
-  color: #EEE8D5; /* Tokyo Night - Text */
+  color: #EEE8D5;
+  /* Tokyo Night - Text */
   opacity: 0.6;
 }
 
@@ -83,16 +84,20 @@ table {
   border-collapse: collapse;
   width: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ddd (1px solid #282c34); /* Tokyo Night - Divider */
-  background-color: #242832; /* Tokyo Night - Background */
-  color: #abb2bf; /* Tokyo Night - Text */
+  border: 1px solid #ddd (1px solid #282c34);
+  /* Tokyo Night - Divider */
+  background-color: #242832;
+  /* Tokyo Night - Background */
+  color: #abb2bf;
+  /* Tokyo Night - Text */
   font-family: sans-serif;
 }
 
 th,
 td {
   padding: 10px;
-  border: 1px solid #ddd (1px solid #434c58); /* Tokyo Night - Faint divider */
+  border: 1px solid #ddd (1px solid #434c58);
+  /* Tokyo Night - Faint divider */
 }
 
 td a {
@@ -101,21 +106,26 @@ td a {
 
 th {
   text-align: left;
-  background-color: #1e232a; /* Tokyo Night - Header background */
-  color: #abb2bf; /* Tokyo Night - Text */
+  background-color: #1e232a;
+  /* Tokyo Night - Header background */
+  color: #abb2bf;
+  /* Tokyo Night - Text */
 }
 
 tr:nth-child(even) {
-  background-color: #242832; /* Tokyo Night - Alternate row background */
+  background-color: #242832;
+  /* Tokyo Night - Alternate row background */
 }
 
 
 /* Form container */
 form {
-  color: #EEE8D5; /* Tokyo Night - Text */
+  color: #EEE8D5;
+  /* Tokyo Night - Text */
   padding: 20px;
   border-radius: 4px;
-  background-color: #282A35; /* Tokyo Night - Subtle Background */
+  background-color: #282A35;
+  /* Tokyo Night - Subtle Background */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: auto;
 }
@@ -138,8 +148,10 @@ input[type="text"],
 textarea {
   padding: 10px;
   border-radius: 4px;
-  border: 1px solid #434C5E; /* Tokyo Night - Border */
-  background-color: #282A35; /* Tokyo Night - Subtle Background */
+  border: 1px solid #434C5E;
+  /* Tokyo Night - Border */
+  background-color: #282A35;
+  /* Tokyo Night - Subtle Background */
   font-size: 14px;
 }
 
@@ -155,7 +167,8 @@ textarea {
 input[type="text"]:focus,
 textarea:focus {
   outline: none;
-  border-color: #6C77FF; /* Tokyo Night - Accent */
+  border-color: #6C77FF;
+  /* Tokyo Night - Accent */
 }
 
 /* Radio buttons */
@@ -181,12 +194,15 @@ textarea:focus {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 1px solid #434C5E; /* Tokyo Night - Border */
-  background-color: #282A35; /* Tokyo Night - Subtle Background */
+  border: 1px solid #434C5E;
+  /* Tokyo Night - Border */
+  background-color: #282A35;
+  /* Tokyo Night - Subtle Background */
 }
 
-.radio-container input[type="radio"]:checked + ::before {
-  background-color: #6C77FF; /* Tokyo Night - Accent */
+.radio-container input[type="radio"]:checked+ ::before {
+  background-color: #6C77FF;
+  /* Tokyo Night - Accent */
 }
 
 /* Submit button */
@@ -195,15 +211,26 @@ input[type="submit"] {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  background-color: #6C77FF; /* Tokyo Night - Accent */
-  color: #EEE8D5; /* Tokyo Night - Text */
+  background-color: #6C77FF;
+  /* Tokyo Night - Accent */
+  color: #EEE8D5;
+  /* Tokyo Night - Text */
   font-size: 14px;
   font-weight: bold;
   transition: background-color 0.2s ease-in-out;
 }
 
 input[type="submit"]:hover {
-  background-color: #434C5E; /* Tokyo Night - Border (hover) */
+  background-color: #434C5E;
+  /* Tokyo Night - Border (hover) */
 }
 
-
+.flash {
+  background-color: #282A35;
+  /* Tokyo Night - Subtle Background */
+  border: 1px solid #519149;
+  padding: 8px;
+  color: #7ecc74;
+  border-radius: 4px;
+  font-size: 12px;
+}
