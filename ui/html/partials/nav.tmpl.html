@@ -1,10 +1,15 @@
 {{define "nav"}}
-  <nav>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/list/create">+ Create</a></li>
-      <li><a href="#">Lists</a></li>
-      <li><a href="#">Logout</a></li>
-    </ul>
-  </nav>
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/list/create">+ Create</a></li>
+    <li><a href="/user/signup">Signup</a></li>
+    <li><a href="/user/login">Login</a></li>
+    <li>
+      <form class="logout-form" action="/user/logout" method="POST">
+        <button>Logout</a>
+      </form>
+    </li>
+  </ul>
+</nav>
 {{end}}

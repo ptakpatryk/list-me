@@ -30,6 +30,10 @@ header .content {
   color: white;
 }
 
+nav button {
+  all: unset;
+}
+
 nav ul {
   list-style: none;
   margin: 0;
@@ -38,6 +42,8 @@ nav ul {
 }
 
 nav li {
+  cursor: pointer;
+  color: #c0caf5;
   padding: 4px;
   background-color: #343a40;
   transition: background-color 200ms ease-in-out;
@@ -119,7 +125,7 @@ tr:nth-child(even) {
 
 
 /* Form container */
-form {
+form:not(.logout-form) {
   color: #EEE8D5;
   /* Tokyo Night - Text */
   padding: 20px;
