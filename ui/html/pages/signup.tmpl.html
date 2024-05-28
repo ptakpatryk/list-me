@@ -1,0 +1,31 @@
+
+{{define "title"}}Signup{{end}}
+
+{{define "main"}}
+<form action='/user/signup' method='POST' novlidate>
+  <div class="input-wrapper">
+    <label>Name:</label>
+    <input type='text' name='name' value='{{.Form.Name}}'>
+    {{with .Form.FieldErrors.name}}
+      <div class="error">{{.}}</div>
+    {{end}}
+  </div>
+  <div class="input-wrapper">
+    <label>Email:</label>
+    <input type='email' name='email' value='{{.Form.Email}}' />
+    {{with .Form.FieldErrors.email}}
+      <div class="error">{{.}}</div>
+    {{end}}
+  </div>
+  <div class="input-wrapper">
+    <label>Password:</label>
+    <input type='password' name='password' />
+    {{with .Form.FieldErrors.password}}
+      <div class="error">{{.}}</div>
+    {{end}}
+  </div>
+  <div>
+    <input type='submit' value='Signup'>
+  </div>
+</form>
+{{end}}
