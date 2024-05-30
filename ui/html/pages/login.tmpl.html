@@ -1,15 +1,7 @@
-
-{{define "title"}}Signup{{end}}
+{{define "title"}}Login{{end}}
 
 {{define "main"}}
-<form action='/user/signup' method='POST' novalidate>
-  <div class="input-wrapper">
-    <label>Name:</label>
-    <input type='text' name='name' value='{{.Form.Name}}'>
-    {{with .Form.FieldErrors.name}}
-      <div class="error">{{.}}</div>
-    {{end}}
-  </div>
+<form action='/user/login' method='POST' novalidate>
   <div class="input-wrapper">
     <label>Email:</label>
     <input type='email' name='email' value='{{.Form.Email}}' />
@@ -24,8 +16,17 @@
       <div class="error">{{.}}</div>
     {{end}}
   </div>
+  {{with .Form.NonFieldErrors}}
+    <div class="error">
+      <ul>
+        {{range .}}
+          <li>{{ . }}</li>
+        {{end}}
+      </ul>
+    <div>
+  {{end}}
   <div>
-    <input type='submit' value='Signup'>
+    <input type='submit' value='Login'>
   </div>
 </form>
 {{end}}
