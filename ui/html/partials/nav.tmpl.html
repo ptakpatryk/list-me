@@ -6,6 +6,7 @@
       <li><a href="/list/create">+ Create</a></li>
       <li>
         <form class="logout-form" action="/user/logout" method="POST">
+          <input type="hidden" name="csrf_token" value="{{.CSRFToken}}" />
           <button>Logout</a>
         </form>
       </li>

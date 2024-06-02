@@ -48,7 +48,7 @@ func (l *ListModel) Get(id int) (List, error) {
 }
 
 func (l *ListModel) Latest() ([]List, error) {
-	stmt := `SELECT id, title, description, created, expires FROM lists ORDER BY id LIMIT 5`
+	stmt := `SELECT id, title, description, created, expires FROM lists ORDER BY created DESC LIMIT 5`
 
 	rows, err := l.DB.Query(stmt)
 	if err != nil {
