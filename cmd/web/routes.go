@@ -18,15 +18,16 @@ func (app *application) routes() http.Handler {
 	//Handlers
 	mux.Handle("GET /{$}", dynamic.ThenFunc(app.home))
 	mux.Handle("GET /list/view/{id}", dynamic.ThenFunc(app.listView))
-	mux.Handle("GET /list/create", dynamic.ThenFunc(app.listCreate))
-	mux.Handle("POST /list/create", dynamic.ThenFunc(app.listCreatePost))
-
-  //Auth
 	mux.Handle("GET /user/signup", dynamic.ThenFunc(app.userSignup))
 	mux.Handle("POST /user/signup", dynamic.ThenFunc(app.userSignupPost))
 	mux.Handle("GET /user/login", dynamic.ThenFunc(app.userLogin))
 	mux.Handle("POST /user/login", dynamic.ThenFunc(app.userLoginPost))
-	mux.Handle("POST /user/logout", dynamic.ThenFunc(app.userLogoutPost))
+
+	// Protected
+	protected := dynamic.Append(app.requireAuthentication)
+	mux.Handle("GET /list/create", protected.ThenFunc(app.listCreate))
+	mux.Handle("POST /list/create", protected.ThenFunc(app.listCreatePost))
+	mux.Handle("POST /user/logout", protected.ThenFunc(app.userLogoutPost))
 
 	standard := alice.New(app.recoverPanic, app.logRequest, commonHeaders)
 	return standard.Then(mux)
