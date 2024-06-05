@@ -89,7 +89,7 @@ func (app *application) listCreatePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	app.sessionManager.Put(r.Context(), "flash", "Snippet succesfully created!")
+	app.sessionManager.Put(r.Context(), "flash", "List succesfully created!")
 
 	http.Redirect(w, r, fmt.Sprintf("/list/view/%d", id), http.StatusSeeOther)
 }
