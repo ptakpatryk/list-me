@@ -192,34 +192,36 @@ func (app *application) userLoginPost(w http.ResponseWriter, r *http.Request) {
 			data.Form = form
 			app.render(w, r, http.StatusUnprocessableEntity, "login.tmpl.html", data)
 		} else {
-      app.serverError(w, r, err)
+			app.serverError(w, r, err)
 		}
-    return
+		return
 	}
 
-  err = app.sessionManager.RenewToken(r.Context())
-  if err != nil {
-    app.serverError(w, r, err)
-    return
-  }
+	err = app.sessionManager.RenewToken(r.Context())
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
 
-  app.sessionManager.Put(r.Context(), "authenticatedUserId", id)
-
+	app.sessionManager.Put(r.Context(), "authenticatedUserId", id)
 
 	app.sessionManager.Put(r.Context(), "flash", fmt.Sprintf("Successfully logged in user with id %d", id))
-  http.Redirect(w, r, "/list/create", http.StatusSeeOther)
+	http.Redirect(w, r, "/list/create", http.StatusSeeOther)
 }
 
 func (app *application) userLogoutPost(w http.ResponseWriter, r *http.Request) {
-  err := app.sessionManager.RenewToken(r.Context())
-  if err != nil {
-    app.serverError(w, r, err)
-    return
-  }
+	err := app.sessionManager.RenewToken(r.Context())
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
 
-  app.sessionManager.Remove(r.Context(), "authenticatedUserId")
-	app.sessionManager.Put(r.Context(), "flash", "You've been logged out successfully!" )
+	app.sessionManager.Remove(r.Context(), "authenticatedUserId")
+	app.sessionManager.Put(r.Context(), "flash", "You've been logged out successfully!")
 
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
 
-  http.Redirect(w, r, "/", http.StatusSeeOther)
+func ping(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("OK"))
 }
