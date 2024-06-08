@@ -18,6 +18,12 @@ type ListModel struct {
 	DB *sql.DB
 }
 
+type SnippetModelInterface interface {
+	Insert(title, description string, expires int) (int, error)
+	Get(id int) (List, error)
+	Latest() ([]List, error)
+}
+
 func (l *ListModel) Insert(title, description string, expires int) (int, error) {
 	stmt := `INSERT INTO lists (title, description, expires)
   VALUES ($1, $2, now() + interval '1 day' * $3) RETURNING id`
@@ -55,24 +61,24 @@ func (l *ListModel) Latest() ([]List, error) {
 		return nil, err
 	}
 
-  defer rows.Close()
+	defer rows.Close()
 
-  var lists []List
+	var lists []List
 
-  for rows.Next() {
-    var l List
+	for rows.Next() {
+		var l List
 
-    err = rows.Scan(&l.ID, &l.Title, &l.Description, &l.Created, &l.Expires)
-    if err != nil {
-      return nil, err
-    }
+		err = rows.Scan(&l.ID, &l.Title, &l.Description, &l.Created, &l.Expires)
+		if err != nil {
+			return nil, err
+		}
 
-    lists = append(lists, l)
-  }
+		lists = append(lists, l)
+	}
 
-  if err = rows.Err(); err != nil {
-    return nil, err
-  }
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
 
 	return lists, nil
 }
